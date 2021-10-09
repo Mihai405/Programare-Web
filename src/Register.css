@@ -1,0 +1,18 @@
+.paper{
+    width:400px;
+    padding: 50px 20px;
+    margin: 100px auto;
+}
+
+#headerText{
+    color: #999;
+    margin-top:0;
+    margin: 0;
+    font-weight: 400;
+    font-size: 25px;
+    padding-bottom: 20px;
+}
+
+form > div{
+    padding-top: 20px;
+}
