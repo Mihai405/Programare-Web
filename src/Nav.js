@@ -26,7 +26,7 @@ export default function ButtonAppBar() {
       <AppBar position="static">
         <Toolbar>
           <Button onClick={() => {return history.push("/")}} color="inherit">Home</Button>
-          <Button onClick={() => {return history.push("/login")}} color="inherit">Login</Button>
+          <Button onClick={() => {return history.push("/login")}} style={{marginLeft:"auto"}} color="inherit">Login</Button>
           <Button onClick={() => {return history.push("/register")}} color="inherit">Register</Button>
         </Toolbar>
       </AppBar>

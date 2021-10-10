@@ -2,6 +2,8 @@ import { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
+import Avatar from "@mui/material/Avatar";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Grid, Paper, Typography } from "@material-ui/core";
 import "./Register.css";
 
@@ -44,7 +46,7 @@ export function Register() {
     }
 
     if (values.password.length < 5) {
-      newErrors.password = "Password is not valid";
+      newErrors.password = "Password is not long enough";
       isValid = false;
     }
 
@@ -75,6 +77,9 @@ export function Register() {
     <Grid>
       <Paper elevation={20} className="paper">
         <Grid align="center">
+          <Avatar sx={{ bgcolor: "#008000" }}>
+            <AccountCircleIcon />
+          </Avatar>
           <h1 id="headerText">Register</h1>
           <Typography variant="subtitle1" gutterBottom>
             Please fill this form to create an account !

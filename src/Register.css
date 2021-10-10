@@ -1,7 +1,16 @@
 .paper{
-    width:400px;
-    padding: 50px 20px;
+    width:100%;
+    padding: 40px auto;
     margin: 100px auto;
+    background-color: #fff;
+}
+
+@media screen and (min-width:400px){
+    .paper{
+        width:400px;
+        padding: 50px 20px;
+        margin: 100px auto;
+    }
 }
 
 #headerText{
