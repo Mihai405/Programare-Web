@@ -1,9 +1,14 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
+import React from "react";
+import { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Button from "@material-ui/core/Button";
 import { useHistory } from "react-router-dom";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,13 +26,71 @@ export default function ButtonAppBar() {
   const classes = useStyles();
   let history = useHistory();
 
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="relative">
         <Toolbar>
-          <Button onClick={() => {return history.push("/")}} color="inherit">Home</Button>
-          <Button onClick={() => {return history.push("/login")}} style={{marginLeft:"auto"}} color="inherit">Login</Button>
-          <Button onClick={() => {return history.push("/register")}} color="inherit">Register</Button>
+          <IconButton
+            id="drop-down-button"
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            sx={{ mr: 2 }}
+            aria-controls="basic-menu"
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            onClick={handleClick}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+          >
+            <MenuItem onClick={handleClose}>PC/Perificerice</MenuItem>
+            <MenuItem onClick={handleClose}>Electrocasnice</MenuItem>
+            <MenuItem onClick={handleClose}>Haine</MenuItem>
+          </Menu>
+          <Button
+            onClick={() => {
+              return history.push("/");
+            }}
+            color="inherit"
+          >
+            Shop
+          </Button>
+          <Button
+            onClick={() => {
+              return history.push("/login");
+            }}
+            style={{ marginLeft: "auto" }}
+            color="inherit"
+          >
+            Login
+          </Button>
+          <Button
+            onClick={() => {
+              return history.push("/register");
+            }}
+            color="inherit"
+          >
+            Register
+          </Button>
         </Toolbar>
       </AppBar>
     </div>
