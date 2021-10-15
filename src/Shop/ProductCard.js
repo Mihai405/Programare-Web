@@ -11,11 +11,11 @@ import photo from './image.jpg'
 export function ProductCard() {
   return (
     <Grid item xs={4}>
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 300 }}>
       <CardActionArea>
         <CardMedia
           component="img"
-          height="140"
+          height="200"
           image={photo}
           alt="panda"
         />

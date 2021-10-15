@@ -2,8 +2,7 @@ import { ProductCard } from "./ProductCard";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import { Typography } from "@mui/material";
+import { Autocomplete, TextField } from "@mui/material";
 import photo from "./shopPoster.png";
 
 export function Shop() {
@@ -23,7 +22,21 @@ export function Shop() {
             height: "270px",
           }}
         />
-        <Grid container item spacing={3}>
+        <Grid container sx={{mb:10}}>
+          <Grid item xs={5}>
+              <Autocomplete
+          disablePortal
+          id="combo-box-demo"
+          options={["A-Z","Z-A","price Low-High","price High-Low"]}
+          sx={{ width: 300 }}
+          renderInput={(params) => <TextField {...params} label="Sort by" />}
+        />
+          </Grid>
+          <Grid item xs={5}>
+          <TextField  fullWidth id="outlined-basic" label="Search" variant="outlined" />
+          </Grid>
+        </Grid>
+        <Grid container spacing={3}>
           {items.map((item) => (
             <ProductCard key={item} />
           ))}
