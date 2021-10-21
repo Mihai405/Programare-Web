@@ -5,10 +5,9 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import photo from './image.jpg'
 
 
-export function ProductCard({ name , description , price}) {
+export function ProductCard({ name , description , price , productImage}) {
   return (
     <Grid item xs={4}>
     <Card sx={{ maxWidth: 300 }}>
@@ -16,7 +15,7 @@ export function ProductCard({ name , description , price}) {
         <CardMedia
           component="img"
           height="200"
-          image={photo}
+          image={productImage}
           alt="panda"
         />
         <CardContent>
@@ -27,7 +26,7 @@ export function ProductCard({ name , description , price}) {
             {description}
           </Typography>
           <Typography gutterBottom variant="h5" component="div" align="center" marginTop="20px">
-            {price}
+            {price}lei
           </Typography>
         </CardContent>
       </CardActionArea>
