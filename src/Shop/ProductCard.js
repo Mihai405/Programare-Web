@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid';
 import photo from './image.jpg'
 
 
-export function ProductCard() {
+export function ProductCard({ name , description , price}) {
   return (
     <Grid item xs={4}>
     <Card sx={{ maxWidth: 300 }}>
@@ -20,17 +20,20 @@ export function ProductCard() {
           alt="panda"
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Lorem
+          <Typography gutterBottom variant="h5" component="div" align="center">
+            {name}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            {description}
+          </Typography>
+          <Typography gutterBottom variant="h5" component="div" align="center" marginTop="20px">
+            {price}
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Share
+      <CardActions sx={{margin:"10px 20px",justifyContent:"center"}}>
+        <Button variant="contained" color="success">
+          Add
         </Button>
       </CardActions>
     </Card>

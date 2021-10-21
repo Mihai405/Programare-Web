@@ -9,6 +9,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
+import { useAuthContext } from './Auth/AuthContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,6 +27,8 @@ export default function ButtonAppBar() {
   const classes = useStyles();
   let history = useHistory();
 
+  const { user, onLogout } = useAuthContext();
+
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -34,6 +37,11 @@ export default function ButtonAppBar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  function handleLogout(e) {
+    e.preventDefault();
+    onLogout();
+  }
 
   return (
     <div className={classes.root}>
@@ -74,6 +82,7 @@ export default function ButtonAppBar() {
           >
             Shop
           </Button>
+          {(!user || !user.email) &&<>
           <Button
             onClick={() => {
               return history.push("/login");
@@ -90,7 +99,13 @@ export default function ButtonAppBar() {
             color="inherit"
           >
             Register
-          </Button>
+          </Button></>}
+          {user && user.email && (
+          <div style={{ marginLeft: "auto" }}>
+            Welcome {user.email}!{' '}
+            <Button onClick={handleLogout} color="inherit">Logout</Button>
+          </div>
+        )}
         </Toolbar>
       </AppBar>
     </div>

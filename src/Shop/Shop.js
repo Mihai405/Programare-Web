@@ -4,9 +4,23 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { Autocomplete, TextField } from "@mui/material";
 import photo from "./shopPoster.png";
+import { useEffect, useState } from "react";
 
 export function Shop() {
-  const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  const [ products, setProducts ] = useState([])
+
+  useEffect(()=>{
+    async function getProducts(){
+      const res=await fetch("http://127.0.0.1:8000/api/marketplace/products/");
+      const data= await res.json();
+      setProducts(data);
+      console.log(data);
+    }
+    
+    getProducts();
+
+  },[])
+
   return (
     <>
       <Container maxWidth="xl">
@@ -37,8 +51,8 @@ export function Shop() {
           </Grid>
         </Grid>
         <Grid container spacing={3}>
-          {items.map((item) => (
-            <ProductCard key={item} />
+          {products.map((product) => (
+            <ProductCard key={product} {...product}/>
           ))}
         </Grid>
       </Container>
