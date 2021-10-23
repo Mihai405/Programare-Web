@@ -1,13 +1,12 @@
-import { useEffect, useState } from "react";
-import { useAuthContext } from "../../Auth/AuthContext";
 import { CartContextProvider } from "./CartContext";
-import { CartList } from "./CartList";
+import { CartItems } from "./CartItems";
 
 export function Cart() {
   return (
     <>
+      
       <CartContextProvider>
-        <CartList />
+        <CartItems />
       </CartContextProvider>
     </>
   );

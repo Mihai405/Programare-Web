@@ -1,6 +1,8 @@
 import { styled } from "@mui/material/styles";
-import { Grid, Paper, Typography } from "@material-ui/core";
 import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
 import { useAuthContext } from "../../Auth/AuthContext";
 import { useCartContext } from "./CartContext";
@@ -15,9 +17,9 @@ const Img = styled("img")({
 export function CartItemDetail({ id, index, product, quantity }) {
   const [quantityValue, setQuantityValue] = useState(quantity);
   const { token } = useAuthContext();
-  const { cartItems, setCartItems } = useCartContext();
+  const { cartItems, setCartItems , increaseItemQuantity , decreaseItemQuantity} = useCartContext();
   
-  useEffect(() => {
+  /*useEffect(() => {
     async function setItemQuantity() {
       const res = await fetch(`http://127.0.0.1:8000/api/marketplace/items/${id}/`, {
         method: "PUT",
@@ -32,7 +34,7 @@ export function CartItemDetail({ id, index, product, quantity }) {
     }
 
     setItemQuantity();
-  }, [quantityValue]);
+  }, [quantity]);*/
 
   async function handleRemoveItem() {
      const res=await fetch(`http://127.0.0.1:8000/api/marketplace/items/${id}/`,{
@@ -47,47 +49,51 @@ export function CartItemDetail({ id, index, product, quantity }) {
   }
 
   const addQuantity = () => {
+    increaseItemQuantity(id,quantityValue+1);
     setQuantityValue(quantityValue + 1);
   };
 
   const removeQuantity = () => {
-    if (quantityValue > 1) setQuantityValue(quantityValue - 1);
+    if (quantityValue > 1){
+      decreaseItemQuantity(id,quantityValue-1);
+      setQuantityValue(quantityValue - 1);
+    }
   };
 
   return (
-    <Paper elevation={3}>
-      <Grid container spacing={4} alignItems="center" justifyContent="center">
-        <Grid item xs={1}>
+    <Paper elevation={2} sx={{p:2,mb:2}}>
+      <Grid container alignItems="center">
+        <Grid item xs={1} container justifyContent="flex-start">
           <Img src={product.productImage} alt={product.name} />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={4} container justifyContent="center">
           <Typography variant="h6" component="div">
             {product.name}
           </Typography>
         </Grid>
-        <Grid item xs={4} container alignItems="center" justifyContent="center">
-          <Grid item xs={4}>
-            <Button variant="contained" size="small" onClick={addQuantity}>
+        <Grid item xs={3} container justifyContent="center">
+          <Grid item xs={3} container justifyContent="center">
+            <Button variant="contained" size="small" color="success" onClick={addQuantity}>
               +
             </Button>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={1} justifyContent="center">
             <Typography variant="h6" component="div">
               {quantityValue}
             </Typography>
           </Grid>
-          <Grid item xs={4}>
-            <Button variant="contained" size="small" onClick={removeQuantity}>
+          <Grid item xs={3} justifyContent="center">
+            <Button variant="contained" size="small" color="error" onClick={removeQuantity}>
               -
             </Button>
           </Grid>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={2} container justifyContent="center">
           <Typography variant="h6" component="div">
             {product.price} lei
           </Typography>
         </Grid>
-        <Grid item xs={1}>
+        <Grid item xs={2} container justifyContent="center">
           <Button variant="contained" size="small" onClick={handleRemoveItem}>
             x
           </Button>

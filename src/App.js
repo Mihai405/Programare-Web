@@ -12,7 +12,7 @@ export function App() {
       <BrowserRouter>
         <Nav />
         <Switch>
-          <Route exact path="/" component={Shop} />
+          <Route exact path="/" component={Shop}/>
           <Route path="/admin" component={() => <h1>Admin</h1>} />
           <Route path="/login" component={LogIn} />
           <Route path="/register" component={Register} />
