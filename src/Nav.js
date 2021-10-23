@@ -9,7 +9,9 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import { useAuthContext } from './Auth/AuthContext';
+import { useAuthContext } from "./Auth/AuthContext";
+import { Typography } from "@mui/material";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -82,30 +84,45 @@ export default function ButtonAppBar() {
           >
             Shop
           </Button>
-          {(!user || !user.email) &&<>
-          <Button
-            onClick={() => {
-              return history.push("/login");
-            }}
-            style={{ marginLeft: "auto" }}
-            color="inherit"
-          >
-            Login
-          </Button>
-          <Button
-            onClick={() => {
-              return history.push("/register");
-            }}
-            color="inherit"
-          >
-            Register
-          </Button></>}
+          {(!user || !user.email) && (
+            <>
+              <Button
+                onClick={() => {
+                  return history.push("/login");
+                }}
+                style={{ marginLeft: "auto" }}
+                color="inherit"
+              >
+                Login
+              </Button>
+              <Button
+                onClick={() => {
+                  return history.push("/register");
+                }}
+                color="inherit"
+              >
+                Register
+              </Button>
+            </>
+          )}
           {user && user.email && (
-          <div style={{ marginLeft: "auto" }}>
-            Welcome {user.email}!{' '}
-            <Button onClick={handleLogout} color="inherit">Logout</Button>
-          </div>
-        )}
+            <>
+              <Typography variant="subtitle2" style={{ marginLeft: "auto" }}>
+                Welcome {user.email}!{" "}
+              </Typography>
+              <IconButton
+                aria-label="shoppingCart"
+                size="large"
+                color="inherit"
+                onClick={() => history.push("/cart")}
+              >
+                <ShoppingCartIcon />
+              </IconButton>
+              <Button onClick={handleLogout} color="inherit">
+                Logout
+              </Button>
+            </>
+          )}
         </Toolbar>
       </AppBar>
     </div>

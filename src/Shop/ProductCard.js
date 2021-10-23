@@ -5,9 +5,32 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 import Grid from '@mui/material/Grid';
+import { useAuthContext } from '../Auth/AuthContext';
 
 
-export function ProductCard({ name , description , price , productImage}) {
+export function ProductCard({ id , name , description , price , productImage}) {
+
+const values={
+  product:id,
+  quantity:1,
+}
+
+const { token } = useAuthContext();
+
+ async function handleCart(){
+    const res = await fetch("http://127.0.0.1:8000/api/marketplace/items/", {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(values),
+    })
+
+    const response=await res.json();
+    console.log(response);
+  }
+
   return (
     <Grid item xs={4}>
     <Card sx={{ maxWidth: 300 }}>
@@ -31,8 +54,8 @@ export function ProductCard({ name , description , price , productImage}) {
         </CardContent>
       </CardActionArea>
       <CardActions sx={{margin:"10px 20px",justifyContent:"center"}}>
-        <Button variant="contained" color="success">
-          Add
+        <Button variant="contained" color="success" onClick={handleCart}>
+          Add to cart
         </Button>
       </CardActions>
     </Card>
