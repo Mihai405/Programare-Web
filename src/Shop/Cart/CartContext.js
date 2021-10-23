@@ -54,8 +54,9 @@ export function CartContextProvider({ children }) {
   }
 
   function printItemsQuantity(){
+    if(cartItems){
     const reducer = (previousValue, currentValue) => previousValue + currentValue.quantity;
-    return cartItems.reduce(reducer,0)
+    return cartItems.reduce(reducer,0)}
   }
 
   const value = { cartItems, setCartItems , increaseItemQuantity , decreaseItemQuantity ,printItemsQuantity};

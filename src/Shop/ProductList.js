@@ -1,3 +1,4 @@
+import { CartContextProvider } from "./Cart/CartContext.js";
 import { ProductCard } from "./ProductCard";
 
 export function ProductList({ products }){
