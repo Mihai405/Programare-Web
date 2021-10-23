@@ -1,9 +1,7 @@
 import { styled } from "@mui/material/styles";
 import { Grid, Paper, Typography } from "@material-ui/core";
-import { Container } from "react-bootstrap";
-import { height, textAlign } from "@mui/system";
 import Button from "@mui/material/Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuthContext } from "../../Auth/AuthContext";
 import { useCartContext } from "./CartContext";
 
@@ -14,24 +12,38 @@ const Img = styled("img")({
   maxHeight: "100%",
 });
 
-export function CartItemDetail({ index , product, quantity }) {
+export function CartItemDetail({ id, index, product, quantity }) {
   const [quantityValue, setQuantityValue] = useState(quantity);
+  const { token } = useAuthContext();
+  const { cartItems, setCartItems } = useCartContext();
+  
+  useEffect(() => {
+    async function setItemQuantity() {
+      const res = await fetch(`http://127.0.0.1:8000/api/marketplace/items/${id}/`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({quantity:quantityValue}),
+      });
+      const data=await res.json();
+      console.log(data);
+    }
 
-  const { token }=useAuthContext();
+    setItemQuantity();
+  }, [quantityValue]);
 
-  const {cartItems , setCartItems}=useCartContext();
-
-  async function handleRemoveItem(){
-    /*
+  async function handleRemoveItem() {
      const res=await fetch(`http://127.0.0.1:8000/api/marketplace/items/${id}/`,{
        method:"DELETE",
        headers:{
          Authorization:`Bearer ${token}`
        },
-     });*/
-     cartItems.splice(index,1);
-     const newCartItems=[...cartItems];
-     setCartItems(newCartItems);
+     });
+    cartItems.splice(index, 1);
+    const newCartItems = [...cartItems];
+    setCartItems(newCartItems);
   }
 
   const addQuantity = () => {
@@ -39,7 +51,7 @@ export function CartItemDetail({ index , product, quantity }) {
   };
 
   const removeQuantity = () => {
-    if (quantityValue > 0) setQuantityValue(quantityValue - 1);
+    if (quantityValue > 1) setQuantityValue(quantityValue - 1);
   };
 
   return (
@@ -53,7 +65,7 @@ export function CartItemDetail({ index , product, quantity }) {
             {product.name}
           </Typography>
         </Grid>
-        <Grid item xs={4} container alignItems="center" justifyContent="center"> 
+        <Grid item xs={4} container alignItems="center" justifyContent="center">
           <Grid item xs={4}>
             <Button variant="contained" size="small" onClick={addQuantity}>
               +
@@ -76,9 +88,9 @@ export function CartItemDetail({ index , product, quantity }) {
           </Typography>
         </Grid>
         <Grid item xs={1}>
-            <Button variant="contained" size="small" onClick={handleRemoveItem}>
-              x
-            </Button>
+          <Button variant="contained" size="small" onClick={handleRemoveItem}>
+            x
+          </Button>
         </Grid>
       </Grid>
     </Paper>
