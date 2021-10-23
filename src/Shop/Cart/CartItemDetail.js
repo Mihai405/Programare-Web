@@ -5,6 +5,7 @@ import { height, textAlign } from "@mui/system";
 import Button from "@mui/material/Button";
 import { useState } from "react";
 import { useAuthContext } from "../../Auth/AuthContext";
+import { useCartContext } from "./CartContext";
 
 const Img = styled("img")({
   margin: "auto",
@@ -13,19 +14,24 @@ const Img = styled("img")({
   maxHeight: "100%",
 });
 
-export function CartItemDetail({ id , product, quantity }) {
+export function CartItemDetail({ index , product, quantity }) {
   const [quantityValue, setQuantityValue] = useState(quantity);
 
   const { token }=useAuthContext();
 
+  const {cartItems , setCartItems}=useCartContext();
+
   async function handleRemoveItem(){
+    /*
      const res=await fetch(`http://127.0.0.1:8000/api/marketplace/items/${id}/`,{
        method:"DELETE",
        headers:{
          Authorization:`Bearer ${token}`
        },
-     });
-     console.log(id);
+     });*/
+     cartItems.splice(index,1);
+     const newCartItems=[...cartItems];
+     setCartItems(newCartItems);
   }
 
   const addQuantity = () => {

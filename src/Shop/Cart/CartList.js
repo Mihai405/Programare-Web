@@ -1,11 +1,13 @@
-import {CartItemDetail} from './CartItemDetail';
+import { useCartContext } from "./CartContext";
+import { CartItemDetail } from "./CartItemDetail";
 
-export function CartList( {cartItems} ){  
-    return(
-        <>
-        {cartItems.map((cartItem) => (
-            <CartItemDetail key={cartItem.id} {...cartItem}/>
-        ))}
-        </>
-    );
+export function CartList() {
+  const { cartItems } = useCartContext();
+  return (
+    <>
+      {cartItems.map((cartItem, index) => (
+        <CartItemDetail key={cartItem.id} index={index} {...cartItem} />
+      ))}
+    </>
+  );
 }

@@ -12,6 +12,7 @@ import Menu from "@mui/material/Menu";
 import { useAuthContext } from "./Auth/AuthContext";
 import { Typography } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { Redirect } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -86,6 +87,7 @@ export default function ButtonAppBar() {
           </Button>
           {(!user || !user.email) && (
             <>
+              <Redirect to="/" />
               <Button
                 onClick={() => {
                   return history.push("/login");
