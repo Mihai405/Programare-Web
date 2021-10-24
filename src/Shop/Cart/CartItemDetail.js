@@ -17,51 +17,39 @@ const Img = styled("img")({
 export function CartItemDetail({ id, index, product, quantity }) {
   const [quantityValue, setQuantityValue] = useState(quantity);
   const { token } = useAuthContext();
-  const { cartItems, setCartItems , increaseItemQuantity , decreaseItemQuantity} = useCartContext();
-  
-  /*useEffect(() => {
-    async function setItemQuantity() {
-      const res = await fetch(`http://127.0.0.1:8000/api/shop/items/${id}/`, {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({quantity:quantityValue}),
-      });
-      const data=await res.json();
-      console.log(data);
-    }
-
-    setItemQuantity();
-  }, [quantity]);*/
+  const {
+    cartItems,
+    setCartItems,
+    increaseItemQuantity,
+    decreaseItemQuantity,
+  } = useCartContext();
 
   async function handleRemoveItem() {
-     const res=await fetch(`http://127.0.0.1:8000/api/shop/items/${id}/`,{
-       method:"DELETE",
-       headers:{
-         Authorization:`Bearer ${token}`
-       },
-     });
+    const res = await fetch(`http://127.0.0.1:8000/api/shop/items/${id}/`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     cartItems.splice(index, 1);
     const newCartItems = [...cartItems];
     setCartItems(newCartItems);
   }
 
   const addQuantity = () => {
-    increaseItemQuantity(id,quantityValue+1);
+    increaseItemQuantity(id, quantityValue + 1);
     setQuantityValue(quantityValue + 1);
   };
 
   const removeQuantity = () => {
-    if (quantityValue > 1){
-      decreaseItemQuantity(id,quantityValue-1);
+    if (quantityValue > 1) {
+      decreaseItemQuantity(id, quantityValue - 1);
       setQuantityValue(quantityValue - 1);
     }
   };
 
   return (
-    <Paper elevation={2} sx={{p:2,mb:2}}>
+    <Paper elevation={2} sx={{ p: 2, mb: 2 }}>
       <Grid container alignItems="center">
         <Grid item xs={1} container justifyContent="flex-start">
           <Img src={product.productImage} alt={product.name} />
@@ -73,7 +61,12 @@ export function CartItemDetail({ id, index, product, quantity }) {
         </Grid>
         <Grid item xs={3} container justifyContent="center">
           <Grid item xs={3} container justifyContent="center">
-            <Button variant="contained" size="small" color="success" onClick={addQuantity}>
+            <Button
+              variant="contained"
+              size="small"
+              color="success"
+              onClick={addQuantity}
+            >
               +
             </Button>
           </Grid>
@@ -83,7 +76,12 @@ export function CartItemDetail({ id, index, product, quantity }) {
             </Typography>
           </Grid>
           <Grid item xs={3} justifyContent="center">
-            <Button variant="contained" size="small" color="error" onClick={removeQuantity}>
+            <Button
+              variant="contained"
+              size="small"
+              color="error"
+              onClick={removeQuantity}
+            >
               -
             </Button>
           </Grid>

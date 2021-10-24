@@ -12,7 +12,7 @@ export function Register() {
     email: "",
     password: "",
     retypePassword: "",
-    accountCreated:"",
+    accountCreated: "",
   });
 
   const [errors, setErrors] = useState({
@@ -32,7 +32,11 @@ export function Register() {
     }
     newErrors[event.target.id] = "";
     setErrors(newErrors);
-    setValues({ ...values, [event.target.id]: event.target.value , accountCreated:''});
+    setValues({
+      ...values,
+      [event.target.id]: event.target.value,
+      accountCreated: "",
+    });
   };
 
   const formIsValid = () => {
@@ -65,27 +69,33 @@ export function Register() {
     return isValid;
   };
 
-  async function handleSubmit(event){
+  async function handleSubmit(event) {
     event.preventDefault();
 
     if (!formIsValid()) return;
 
     const { retypePassword, ...safeValues } = values;
-    const response=await fetch("http://127.0.0.1:8000/api/register/", {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(safeValues),
-        }).then((res) => res.json());
-    
-    if(response.email && response.email[0]==="user with this email address already exists."){
-      setErrors({...errors, email:"A user with this email address already exists."});
+    const response = await fetch("http://127.0.0.1:8000/api/register/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(safeValues),
+    }).then((res) => res.json());
+
+    if (
+      response.email &&
+      response.email[0] === "user with this email address already exists."
+    ) {
+      setErrors({
+        ...errors,
+        email: "A user with this email address already exists.",
+      });
     }
-    if(response.role==='user'){
-      setValues({...values , accountCreated:'Account created successfully'});
+    if (response.role === "user") {
+      setValues({ ...values, accountCreated: "Account created successfully" });
     }
-  };
+  }
 
   return (
     <Grid>
@@ -96,10 +106,12 @@ export function Register() {
           </Avatar>
           <h1 id="headerText">Register</h1>
           {values.accountCreated !== "" ? (
-              <Alert severity="success">{values.accountCreated}!</Alert>
-            ) : <Typography variant="subtitle1" gutterBottom>
-            Please fill this form to create an account !
-          </Typography>}
+            <Alert severity="success">{values.accountCreated}!</Alert>
+          ) : (
+            <Typography variant="subtitle1" gutterBottom>
+              Please fill this form to create an account !
+            </Typography>
+          )}
           <div>
             {errors.passwordMatch !== "" ? (
               <Alert severity="error">{errors.passwordMatch}!</Alert>

@@ -13,7 +13,6 @@ import { useAuthContext } from "./Auth/AuthContext";
 import { Typography } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -44,7 +43,7 @@ export default function ButtonAppBar() {
   function handleLogout(e) {
     e.preventDefault();
     onLogout();
-    return history.push('/');
+    return history.push("/");
   }
 
   return (
@@ -112,6 +111,9 @@ export default function ButtonAppBar() {
               <Typography variant="subtitle2" style={{ marginLeft: "auto" }}>
                 Welcome {user.email}!{" "}
               </Typography>
+              <Button onClick={() => history.push("/orders")} color="inherit">
+                Orders
+              </Button>
               <IconButton
                 aria-label="shoppingCart"
                 size="large"

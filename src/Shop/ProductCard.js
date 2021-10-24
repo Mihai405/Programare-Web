@@ -32,17 +32,14 @@ export function ProductCard({ id, name, description, price, productImage }) {
       const data = await req.json();
       const found = data.find((element) => element.product.id === id);
       if (!found) {
-        const res = await fetch(
-          "http://127.0.0.1:8000/api/shop/items/",
-          {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(values),
-          }
-        );
+        const res = await fetch("http://127.0.0.1:8000/api/shop/items/", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        });
 
         const response = await res.json();
         console.log(response);

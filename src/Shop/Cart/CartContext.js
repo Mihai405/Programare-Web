@@ -7,7 +7,7 @@ const CartContext = React.createContext();
 export function CartContextProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
   const { token } = useAuthContext();
-  const [itemsQuantity , setItemsQuantity]=useState(printItemsQuantity())
+  const [itemsQuantity, setItemsQuantity] = useState(getItemsQuantity());
 
   useEffect(() => {
     async function getCartItems() {
@@ -25,41 +25,63 @@ export function CartContextProvider({ children }) {
     getCartItems();
   }, [itemsQuantity]);
 
-  async function increaseItemQuantity(id,quantityValue) {
+  async function increaseItemQuantity(id, quantityValue) {
     const res = await fetch(`http://127.0.0.1:8000/api/shop/items/${id}/`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({quantity:quantityValue}),
+      body: JSON.stringify({ quantity: quantityValue }),
     });
-    const data=await res.json();
+    const data = await res.json();
     console.log(data);
-    setItemsQuantity(itemsQuantity+1);
+    setItemsQuantity(itemsQuantity + 1);
   }
 
-  async function decreaseItemQuantity(id,quantityValue) {
+  async function decreaseItemQuantity(id, quantityValue) {
     const res = await fetch(`http://127.0.0.1:8000/api/shop/items/${id}/`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({quantity:quantityValue}),
+      body: JSON.stringify({ quantity: quantityValue }),
     });
-    const data=await res.json();
+    const data = await res.json();
     console.log(data);
-    setItemsQuantity(itemsQuantity-1);
+    setItemsQuantity(itemsQuantity - 1);
   }
 
-  function printItemsQuantity(){
-    if(cartItems){
-    const reducer = (previousValue, currentValue) => previousValue + currentValue.quantity;
-    return cartItems.reduce(reducer,0)}
+  async function addItemToOrder(id) {
+    const res = await fetch(`http://127.0.0.1:8000/api/shop/items/${id}/`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ordered: 1 }),
+    });
+    const data = await res.json();
+    console.log(data);
   }
 
-  const value = { cartItems, setCartItems , increaseItemQuantity , decreaseItemQuantity ,printItemsQuantity};
+  function getItemsQuantity() {
+    if (cartItems) {
+      const reducer = (previousValue, currentValue) =>
+        previousValue + currentValue.quantity;
+      return cartItems.reduce(reducer, 0);
+    }
+  }
+
+  const value = {
+    cartItems,
+    setCartItems,
+    increaseItemQuantity,
+    decreaseItemQuantity,
+    getItemsQuantity,
+    addItemToOrder,
+  };
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
 

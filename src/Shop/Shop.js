@@ -6,16 +6,13 @@ import photo from "./shopPoster.png";
 import { useEffect, useState } from "react";
 import { ProductList } from "./ProductList";
 
-
 export function Shop() {
   const [products, setProducts] = useState([]);
   const [searchProduct, setSearchProduct] = useState("");
   const [sortValue, setSortValue] = useState(null);
   useEffect(() => {
     async function getProducts() {
-      const res = await fetch(
-        "http://127.0.0.1:8000/api/products/"
-      );
+      const res = await fetch("http://127.0.0.1:8000/api/products/");
       const data = await res.json();
       setProducts(data);
     }
@@ -27,7 +24,7 @@ export function Shop() {
     setSearchProduct(event.target.value);
   }
 
-  function onSortChange(event,newValue){
+  function onSortChange(event, newValue) {
     setSortValue(newValue);
   }
 
@@ -35,18 +32,18 @@ export function Shop() {
     return product.name.toLowerCase().includes(searchProduct.toLowerCase());
   });
 
-  switch(sortValue){
-    case 'A-Z':
-      filteredProducts.sort((a,b)=>a.name.localeCompare(b.name));
+  switch (sortValue) {
+    case "A-Z":
+      filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
       break;
-    case 'Z-A':
-      filteredProducts.sort((a,b)=>b.name.localeCompare(a.name));
+    case "Z-A":
+      filteredProducts.sort((a, b) => b.name.localeCompare(a.name));
       break;
-    case 'price Low-High':
-      filteredProducts.sort((a,b)=>a.price-b.price);
+    case "price Low-High":
+      filteredProducts.sort((a, b) => a.price - b.price);
       break;
-    case 'price High-Low':
-      filteredProducts.sort((a,b)=>b.price-a.price);
+    case "price High-Low":
+      filteredProducts.sort((a, b) => b.price - a.price);
       break;
     default:
   }
@@ -76,10 +73,7 @@ export function Shop() {
               onChange={onSortChange}
               value={sortValue}
               renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Sort by"
-                />
+                <TextField {...params} label="Sort by" />
               )}
             />
           </Grid>

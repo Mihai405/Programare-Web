@@ -5,8 +5,8 @@ import Avatar from "@mui/material/Avatar";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Grid, Paper, Typography } from "@material-ui/core";
 import "./Auth.css";
-import { useAuthContext } from './AuthContext';
-import { Redirect } from 'react-router';
+import { useAuthContext } from "./AuthContext";
+import { Redirect } from "react-router";
 import { Alert } from "@mui/material";
 
 export function LogIn() {
@@ -18,12 +18,12 @@ export function LogIn() {
   const [errors, setErrors] = useState({
     email: "",
     password: "",
-    errorMesage:"",
+    errorMesage: "",
   });
 
-  const [ role , setRole ]=useState(null);
+  const [role, setRole] = useState(null);
 
-  const { onLogin } =useAuthContext();
+  const { onLogin } = useAuthContext();
 
   const handleInputChange = (event) => {
     const newErrors = { ...errors };
@@ -54,81 +54,82 @@ export function LogIn() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    
+
     if (!formIsValid()) return;
 
-    const response=await fetch('http://127.0.0.1:8000/token/',{
-      method:'POST',
-      headers:{
-        'Content-Type':'application/json',
+    const response = await fetch("http://127.0.0.1:8000/token/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-      body:JSON.stringify(values),
-    }).then((res)=>res.json());
+      body: JSON.stringify(values),
+    }).then((res) => res.json());
 
-    const { token , user }={...response};
+    const { token, user } = { ...response };
 
-    if(token){
-      onLogin(token,user);
+    if (token) {
+      onLogin(token, user);
       setRole(user.role);
     }
 
-    if(!token){
-      setErrors({...errors,errorMesage:"The credentials are not valid"});
+    if (!token) {
+      setErrors({ ...errors, errorMesage: "The credentials are not valid" });
     }
   }
-  
+
   return (
     <>
-    {(role==='user' && <Redirect to='/' />) || (role==='admin' && <Redirect to='/admin' />)}
-    <Grid>
-      <Paper elevation={20} className="paper">
-        <Grid align="center">
-          <Avatar sx={{ bgcolor: "#008000" }}>
-            <AccountCircleIcon />
-          </Avatar>
-          <h1 id="headerText">LogIn</h1>
-          <Typography variant="subtitle1" gutterBottom>
-            Sign in into your account !
-          </Typography>
-          <div>
-            {errors.errorMesage !== "" ? (
-              <Alert severity="error">{errors.errorMesage}!</Alert>
-            ) : null}
-          </div>
-        </Grid>
-        <form onSubmit={handleSubmit} noValidate>
-          <div>
-            <TextField
-              fullWidth
-              error={errors.email !== "" ? true : false}
-              type="email"
-              id="email"
-              label="Email"
-              onChange={handleInputChange}
-              value={values.email}
-              helperText={errors.email}
-            />
-          </div>
-          <div>
-            <TextField
-              fullWidth
-              error={errors.password !== "" ? true : false}
-              type="password"
-              id="password"
-              label="Password"
-              onChange={handleInputChange}
-              value={values.password}
-              helperText={errors.password}
-            />
-          </div>
-          <div align="center">
-            <Button variant="contained" type="submit">
-              Sign In
-            </Button>
-          </div>
-        </form>
-      </Paper>
-    </Grid>
+      {(role === "user" && <Redirect to="/" />) ||
+        (role === "admin" && <Redirect to="/admin" />)}
+      <Grid>
+        <Paper elevation={20} className="paper">
+          <Grid align="center">
+            <Avatar sx={{ bgcolor: "#008000" }}>
+              <AccountCircleIcon />
+            </Avatar>
+            <h1 id="headerText">LogIn</h1>
+            <Typography variant="subtitle1" gutterBottom>
+              Sign in into your account !
+            </Typography>
+            <div>
+              {errors.errorMesage !== "" ? (
+                <Alert severity="error">{errors.errorMesage}!</Alert>
+              ) : null}
+            </div>
+          </Grid>
+          <form onSubmit={handleSubmit} noValidate>
+            <div>
+              <TextField
+                fullWidth
+                error={errors.email !== "" ? true : false}
+                type="email"
+                id="email"
+                label="Email"
+                onChange={handleInputChange}
+                value={values.email}
+                helperText={errors.email}
+              />
+            </div>
+            <div>
+              <TextField
+                fullWidth
+                error={errors.password !== "" ? true : false}
+                type="password"
+                id="password"
+                label="Password"
+                onChange={handleInputChange}
+                value={values.password}
+                helperText={errors.password}
+              />
+            </div>
+            <div align="center">
+              <Button variant="contained" type="submit">
+                Sign In
+              </Button>
+            </div>
+          </form>
+        </Paper>
+      </Grid>
     </>
   );
 }
