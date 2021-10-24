@@ -22,7 +22,7 @@ export function ProductCard({ id, name, description, price, productImage }) {
     if (!user) {
       return history.push("/login");
     } else {
-      const req = await fetch("http://127.0.0.1:8000/api/marketplace/items/", {
+      const req = await fetch("http://127.0.0.1:8000/api/shop/items/", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -33,7 +33,7 @@ export function ProductCard({ id, name, description, price, productImage }) {
       const found = data.find((element) => element.product.id === id);
       if (!found) {
         const res = await fetch(
-          "http://127.0.0.1:8000/api/marketplace/items/",
+          "http://127.0.0.1:8000/api/shop/items/",
           {
             method: "POST",
             headers: {
@@ -48,7 +48,7 @@ export function ProductCard({ id, name, description, price, productImage }) {
         console.log(response);
       } else {
         const res = await fetch(
-          `http://127.0.0.1:8000/api/marketplace/items/${found.id}/`,
+          `http://127.0.0.1:8000/api/shop/items/${found.id}/`,
           {
             method: "PUT",
             headers: {

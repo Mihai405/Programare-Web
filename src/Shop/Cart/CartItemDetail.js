@@ -21,7 +21,7 @@ export function CartItemDetail({ id, index, product, quantity }) {
   
   /*useEffect(() => {
     async function setItemQuantity() {
-      const res = await fetch(`http://127.0.0.1:8000/api/marketplace/items/${id}/`, {
+      const res = await fetch(`http://127.0.0.1:8000/api/shop/items/${id}/`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -37,7 +37,7 @@ export function CartItemDetail({ id, index, product, quantity }) {
   }, [quantity]);*/
 
   async function handleRemoveItem() {
-     const res=await fetch(`http://127.0.0.1:8000/api/marketplace/items/${id}/`,{
+     const res=await fetch(`http://127.0.0.1:8000/api/shop/items/${id}/`,{
        method:"DELETE",
        headers:{
          Authorization:`Bearer ${token}`

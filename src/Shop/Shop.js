@@ -14,7 +14,7 @@ export function Shop() {
   useEffect(() => {
     async function getProducts() {
       const res = await fetch(
-        "http://127.0.0.1:8000/api/marketplace/products/"
+        "http://127.0.0.1:8000/api/products/"
       );
       const data = await res.json();
       setProducts(data);

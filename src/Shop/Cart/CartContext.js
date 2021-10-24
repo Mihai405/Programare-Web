@@ -11,7 +11,7 @@ export function CartContextProvider({ children }) {
 
   useEffect(() => {
     async function getCartItems() {
-      const res = await fetch("http://127.0.0.1:8000/api/marketplace/items/", {
+      const res = await fetch("http://127.0.0.1:8000/api/shop/items/", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -26,7 +26,7 @@ export function CartContextProvider({ children }) {
   }, [itemsQuantity]);
 
   async function increaseItemQuantity(id,quantityValue) {
-    const res = await fetch(`http://127.0.0.1:8000/api/marketplace/items/${id}/`, {
+    const res = await fetch(`http://127.0.0.1:8000/api/shop/items/${id}/`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -40,7 +40,7 @@ export function CartContextProvider({ children }) {
   }
 
   async function decreaseItemQuantity(id,quantityValue) {
-    const res = await fetch(`http://127.0.0.1:8000/api/marketplace/items/${id}/`, {
+    const res = await fetch(`http://127.0.0.1:8000/api/shop/items/${id}/`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,
