@@ -50,33 +50,6 @@ export default function ButtonAppBar() {
     <div className={classes.root}>
       <AppBar position="relative">
         <Toolbar>
-          <IconButton
-            id="drop-down-button"
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-            aria-controls="basic-menu"
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            onClick={handleClick}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Menu
-            id="basic-menu"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            MenuListProps={{
-              "aria-labelledby": "basic-button",
-            }}
-          >
-            <MenuItem onClick={handleClose}>PC/Perificerice</MenuItem>
-            <MenuItem onClick={handleClose}>Electrocasnice</MenuItem>
-            <MenuItem onClick={handleClose}>Haine</MenuItem>
-          </Menu>
           {(!user || user.role === "user") && (
             <>
               <Button

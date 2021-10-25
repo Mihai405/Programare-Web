@@ -8,7 +8,7 @@ export function AdminOrders() {
   const [orders, setOrders] = useState([]);
   useEffect(() => {
     async function getProducts() {
-      const res = await fetch("http://127.0.0.1:8000/api/shop/orders/");
+      const res = await fetch("http://127.0.0.1:8000/api/shop/admin/orders/");
       const data = await res.json();
       setOrders(data);
     }
