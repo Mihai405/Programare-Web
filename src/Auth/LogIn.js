@@ -80,7 +80,7 @@ export function LogIn() {
   return (
     <>
       {(role === "user" && <Redirect to="/" />) ||
-        (role === "admin" && <Redirect to="/admin" />)}
+        (role === "admin" && <Redirect to="/admin/products" />)}
       <Grid>
         <Paper elevation={20} className="paper">
           <Grid align="center">

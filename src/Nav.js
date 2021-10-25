@@ -77,14 +77,38 @@ export default function ButtonAppBar() {
             <MenuItem onClick={handleClose}>Electrocasnice</MenuItem>
             <MenuItem onClick={handleClose}>Haine</MenuItem>
           </Menu>
-          <Button
-            onClick={() => {
-              return history.push("/");
-            }}
-            color="inherit"
-          >
-            Shop
-          </Button>
+          {(!user || user.role === "user") && (
+            <>
+              <Button
+                onClick={() => {
+                  return history.push("/");
+                }}
+                color="inherit"
+              >
+                Shop
+              </Button>
+            </>
+          )}
+          {user && user.role === "admin" && (
+            <>
+              <Button
+                onClick={() => {
+                  return history.push("/admin/products");
+                }}
+                color="inherit"
+              >
+                Products
+              </Button>
+              <Button
+                onClick={() => {
+                  return history.push("/admin/orders");
+                }}
+                color="inherit"
+              >
+                Orders
+              </Button>
+            </>
+          )}
           {(!user || !user.email) && (
             <>
               <Button
@@ -111,17 +135,24 @@ export default function ButtonAppBar() {
               <Typography variant="subtitle2" style={{ marginLeft: "auto" }}>
                 Welcome {user.email}!{" "}
               </Typography>
-              <Button onClick={() => history.push("/orders")} color="inherit">
-                Orders
-              </Button>
-              <IconButton
-                aria-label="shoppingCart"
-                size="large"
-                color="inherit"
-                onClick={() => history.push("/cart")}
-              >
-                <ShoppingCartIcon />
-              </IconButton>
+              {user.role === "user" && (
+                <>
+                  <Button
+                    onClick={() => history.push("/orders")}
+                    color="inherit"
+                  >
+                    Orders
+                  </Button>
+                  <IconButton
+                    aria-label="shoppingCart"
+                    size="large"
+                    color="inherit"
+                    onClick={() => history.push("/cart")}
+                  >
+                    <ShoppingCartIcon />
+                  </IconButton>
+                </>
+              )}
               <Button onClick={handleLogout} color="inherit">
                 Logout
               </Button>
